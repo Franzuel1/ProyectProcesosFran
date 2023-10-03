@@ -19,6 +19,10 @@ describe('El sistema...', function() {
     });
   
     it("Eliminar usuario", function(){
+      let res=sistema.numeroUsuarios();
+      expect(res.num).toEqual(0);
+      sistema.agregarUsuario("Pepe");
+      
       expect(sistema.numeroUsuarios()).toEqual(0);
       sistema.agregarUsuario("Pepe");
       expect(sistema.numeroUsuarios()).toEqual(1);

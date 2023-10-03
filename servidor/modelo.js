@@ -30,9 +30,9 @@ function Sistema(){
         }
     }
     this.numeroUsuarios=function(){
-        //let lista=Object.keys(this.usuarios);
-        //return lista.length;
-        return Object.keys(this.usuarios).length;
+        let lista=Object.keys(this.usuarios);
+        return lista.length;
+        //return Object.keys(this.usuarios).length;
     }
 }
 
