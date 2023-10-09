@@ -3,10 +3,12 @@ function ClienteRest(){
         var cli=this;
         $.getJSON("/agregarUsuario/"+nick,function(data){
             if (data.nick!=-1){
-                console.log("Usuario "+nick+" ha sido registrado")
+                console.log("Usuario "+nick+" ha sido registrado");
+                msg="Usuario "+nick+" ha sido registrado"
             }
             else{
                 console.log("El nick ya está ocupado");
+                msg="Usuario "+nick+" ha sido registrado"
             }
         });
     }

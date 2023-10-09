@@ -11,6 +11,16 @@ function ControlWeb(){
         $("#btnAU").on("click",function(){
             // recoger el valor del input text
             // llamar al servidor usando rest
+            let nick=$("#nick").val();
+            if(nick){
+                $('#mAU').remove();
+                rest.agregarUsuario(nick);
+            }
         });
+    }
+    this.mostrarMsg=function(msg){
+        $('#mMsg').remove();
+        let cadena='<h2 id="mMsg">'+msg+'</h2>';
+        $('msg').append(cadena);
     }
 }
