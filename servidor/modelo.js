@@ -5,6 +5,7 @@ function Sistema(){
         if (!this.usuarios[nick]){ 
             this.usuarios[nick]=new Usuario(nick);
             res.nick=nick; 
+            console.log("Nuevo usuario en el sistem: "+nick);
         } 
         else{ 
             console.log("el nick "+nick+" está en uso"); 
@@ -43,6 +44,8 @@ function Sistema(){
 
 function Usuario(nick){
     this.nick=nick;
+    this.email;
+    this.clave;
 }
 
 module.exports.Sistema=Sistema;
