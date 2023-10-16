@@ -1,12 +1,12 @@
 {
-  "name": "ProyectProcesosFran",
+  "name": "proyectprocesosfran",
   "version": "1.0.0",
   "description": "Arquitectura base del proyecto de Procesos de Ingeniería del Software del curso 2023-2024",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "testW": "node_modules\\.bin\\jasmine-node servidor",
-    "test": "./node_modules/.bin/jasmine-node servidor"
+    "testW": "jasmine-node servidor",
+    "test": "jasmine-node servidor"
   },
   "repository": {
     "type": "git",
