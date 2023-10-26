@@ -1,51 +1,63 @@
-function Sistema(){
-    this.usuarios={}; //this.usuarios=[]
-    this.agregarUsuario=function(nick){
-        let res={"nick":-1}; 
-        if (!this.usuarios[nick]){ 
-            this.usuarios[nick]=new Usuario(nick);
-            res.nick=nick; 
-            console.log("Nuevo usuario en el sistem: "+nick);
-        } 
-        else{ 
-            console.log("el nick "+nick+" está en uso"); 
+function Sistema() {
+    this.usuarios = {}; //this.usuarios=[]
+    this.agregarUsuario = function (nick) {
+        let res = { "nick": -1 };
+        if (!this.usuarios[nick]) {
+            this.usuarios[nick] = new Usuario(nick);
+            res.nick = nick;
+            console.log("Nuevo usuario en el sistem: " + nick);
+        }
+        else {
+            console.log("el nick " + nick + " está en uso");
         } return res;
     }
-    this.obtenerUsuarios=function(){
+    this.obtenerUsuarios = function () {
         return this.usuarios;
     }
-    this.obtenerTodosNick=function(){
+    this.obtenerTodosNick = function () {
         return Object.keys(this.usuarios);
     }
-    this.usuarioActivo=function(nick){
+    this.usuarioActivo = function (nick) {
         //return !(this.usuarios[nick]==undefined)
-        let res={activo:false};
-        res.activo=(nick in this.usuarios);
+        let res = { activo: false };
+        res.activo = (nick in this.usuarios);
         return res;
     }
-    this.eliminarUsuario=function(nick){
-        let res={nick:-1};
-        if (this.usuarios[nick]){
+    this.eliminarUsuario = function (nick) {
+        let res = { nick: -1 };
+        if (this.usuarios[nick]) {
             delete this.usuarios[nick];
-            res.nick=nick;
-            console.log("Usuario "+nick+" eliminado");
+            res.nick = nick;
+            console.log("Usuario " + nick + " eliminado");
         }
-        else{
+        else {
             console.log("El usuario no existe");
         }
         return res;
     }
-    this.numeroUsuarios=function(){
-        let lista=Object.keys(this.usuarios);
-        let res={num:lista.length};
+    this.numeroUsuarios = function () {
+        let lista = Object.keys(this.usuarios);
+        let res = { num: lista.length };
         return res;
     }
+
+    const datos = require("./cad.js");
+    this.cad = new datos.CAD();
+    this.cad.conectar(function (db) {
+        console.log("Conectado a Mongo Atlas");
+    });
+
+    this.usuarioGoogle=function(usr,callback){
+        this.cad.buscarOCrearUsuario(usr,function(obj){
+        callback(obj);
+        });
+        }
 }
 
-function Usuario(nick){
-    this.nick=nick;
+function Usuario(nick) {
+    this.nick = nick;
     this.email;
     this.clave;
 }
 
-module.exports.Sistema=Sistema;
+module.exports.Sistema = Sistema;
