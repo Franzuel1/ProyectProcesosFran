@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Franzuel1/ProyectProcesosFran#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "cookie-session": "^2.0.0",
     "express": "^4.18.2",
     "jasmine-node": "^1.16.0",

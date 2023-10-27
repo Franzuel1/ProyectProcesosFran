@@ -29,13 +29,62 @@ function ControlWeb() {
     }
 
     this.comprobarSesion = function () {
+        //let nick=localStorage.getItem("nick");
         let nick = $.cookie("nick");
         if (nick) {
             cw.mostrarMensaje("Bienvenido al sistema, " + nick);
         }
         else {
             cw.mostrarAgregarUsuario();
+            cw.init();
         }
+    }
+
+    this.init = function () {
+        let cw = this;
+        google.accounts.id.initialize({
+            client_id: "xxxxxxxxxxx", //prod
+            auto_select: false,
+            callback: cw.handleCredentialsResponse
+        });
+        google.accounts.id.prompt();
+    }
+
+    this.handleCredentialsResponse = function (response) {
+        let jwt = response.credential;
+        let user = JSON.parse(atob(jwt.split(".")[1]));
+        console.log(user.name);
+        console.log(user.email);
+        console.log(user.picture);
+        //rest.enviarJwt(jwt);
+    }
+
+    this.enviarJwt = function (jwt) {
+        $.ajax({
+            type: 'POST',
+            url: '/enviarJwt',
+            data: JSON.stringify({ "jwt": jwt }),
+            success: function (data) {
+                let msg = "El nick " + nick + " está ocupado";
+                if (data.nick != -1) {
+                    console.log("Usuario " + data.nick + " ha sido registrado");
+                    msg = "Bienvenido al sistema, " + data.nick;
+                    $.cookie("nick", data.nick);
+                }
+                else {
+                    console.log("El nick ya está ocupado");
+                }
+                cw.limpiar();
+                cw.mostrarMensaje(msg);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                //console.log(JSON.parse(xhr.responseText));
+                console.log("Status: " + textStatus);
+                console.log("Error: " + errorThrown);
+            },
+            contentType: 'application/json'
+            //dataType:'json'
+        });
     }
 
     this.salir = function () {
