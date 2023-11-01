@@ -5,7 +5,7 @@ const url ="http://localhost:3000/";
         service: 'gmail',
         auth: {
             user: 'franzuel1@gmail.com',
-            pass: 'tu-clave-generada' //no es la clave de gmail
+            pass: 'rkbf xgxn ehbd dezl' //no es la clave de gmail
         }
     });
 
