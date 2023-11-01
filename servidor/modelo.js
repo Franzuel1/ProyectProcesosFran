@@ -1,4 +1,6 @@
+const datos = require("./cad.js");
 function Sistema() {
+    this.cad = new datos.CAD();
     this.usuarios = {}; //this.usuarios=[]
     this.agregarUsuario = function (nick) {
         let res = { "nick": -1 };
@@ -41,12 +43,6 @@ function Sistema() {
         return res;
     }
 
-    const datos = require("./cad.js");
-    this.cad = new datos.CAD();
-    this.cad.conectar(function (db) {
-        console.log("Conectado a Mongo Atlas");
-    });
-
     this.usuarioGoogle = function (usr, callback) {
         this.cad.buscarOCrearUsuario(usr, function (obj) {
             callback(obj);
@@ -60,9 +56,14 @@ function Sistema() {
         }
         this.cad.buscarUsuario(obj, function (usr) {
             if (!usr) {
+                //el usuario no existe, luego lo puedo registrar
+                obj.key = Date.now().toString();
+                obj.confirmada = false;
                 modelo.cad.insertarUsuario(obj, function (res) {
                     callback(res);
                 });
+                //correo.enviarEmail(obj.email,obj.key,"Confirmar cuenta");
+                                        //correo.enviarEmail(obj.email, obj.key, "Confirmar cuenta");
             }
             else {
                 callback({ "email": -1 });
@@ -70,44 +71,41 @@ function Sistema() {
         });
     }
 
-    this.buscarUsuario = function (obj, callback) {
-        buscar(this.usuarios, { "email": obj.email }, callback);
+    this.loginUsuario = function (obj, callback) {
+        this.cad.buscarUsuario({ "email": obj.email, "confirmada": true }, function (usr) {
+            if (usr && usr.password == obj.password) {
+                callback(usr);
+            }
+            else {
+                callback({ "email": -1 });
+            }
+        });
     }
 
-    this.insertarUsuario = function (usuario, callback) {
-        insertar(this.usuarios, usuario, callback);
+    this.confirmarUsuario = function (obj, callback) {
+        let modelo = this;
+        this.cad.buscarUsuario({ "email": obj.email, "confirmada": false, "key": obj.key }, function (usr) {
+            if (usr) {
+                usr.confirmada = true;
+                modelo.cad.actualizarUsuario(usr, function (res) {
+                    callback({ "email": res.email }); //callback(res)
+                })
+            }
+            else {
+                callback({ "email": -1 });
+            }
+        })
     }
 
+    this.cad.conectar(function (db) {
+        console.log("Conectado a Mongo Atlas");
+    });
 }
 
 function Usuario(nick) {
     this.nick = nick;
     this.email;
     this.clave;
-}
-
-function buscar(coleccion, criterio, callback) {
-    let col = coleccion;
-    coleccion.find(criterio).toArray(function (error, usuarios) {
-        if (usuarios.length == 0) {
-            callback(undefined);
-        }
-        else {
-            callback(usuarios[0]);
-        }
-    });
-}
-
-function insertar(coleccion, elemento, callback) {
-    coleccion.insertOne(elemento, function (err, result) {
-        if (err) {
-            console.log("error");
-        }
-        else {
-            console.log("Nuevo elemento creado");
-            callback(elemento);
-        }
-    });
 }
 
 module.exports.Sistema = Sistema;
