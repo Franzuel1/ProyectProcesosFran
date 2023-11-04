@@ -37,7 +37,6 @@ function CAD() {
     }
 
     this.insertarUsuario = function (usuario, callback) {
-        console.log(usuario);
         insertar(this.usuarios, usuario, callback);
     }
 

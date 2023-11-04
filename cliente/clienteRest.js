@@ -81,7 +81,7 @@ function ClienteRest() {
                 }
                 else {
                     console.log("El nick está ocupado");
-                    cw.mostrarMensajeLogin("El nick está ocupado");
+                    cw.mostrarMsg("El nick está ocupado");
                 }
             },
             error: function (xhr, textStatus, errorThrown) {

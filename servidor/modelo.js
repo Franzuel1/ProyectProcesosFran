@@ -63,7 +63,7 @@ function Sistema() {
                     callback(res);
                 });
                 //correo.enviarEmail(obj.email,obj.key,"Confirmar cuenta");
-                                        //correo.enviarEmail(obj.email, obj.key, "Confirmar cuenta");
+                correo.enviarEmail(obj.email, obj.key, "Confirmar cuenta");
             }
             else {
                 callback({ "email": -1 });
