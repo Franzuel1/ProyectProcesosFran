@@ -12,6 +12,15 @@ const cookieSession = require("cookie-session");
 require("./servidor/passport-setup.js");
 const modelo = require("./servidor/modelo.js");
 const bodyParser = require("body-parser");
+const haIniciado = function (request, response, next) {
+    if (request.user) {
+        next();
+    }
+    else {
+        response.redirect("/")
+    }
+}
+const bcrypt = require("bcrypt");
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + "/"));
@@ -96,9 +105,31 @@ app.post("/registrarUsuario", function (request, response) {
     });
 });
 
-app.post("/loginUsuario", function (request, response) {
-    sistema.loginUsuario(request.body, function (res) {
-        response.send({ "nick": res.email });
+app.post('/loginUsuario', passport.authenticate("local", {
+    failureRedirect: "/fallo", successRedirect: "/ok"})
+);
+
+app.get("/ok", function (request, response) {
+    response.send({ nick: request.user.email })
+});
+
+app.get("/cerrarSesion", haIniciado, function (request, response) {
+    let nick = request.user.nick;
+    request.logout();
+    response.redirect("/");
+    if (nick) {
+        sistema.eliminarUsuario(nick);
+    }
+});
+
+app.get("/confirmarUsuario/:email/:key", function (request, response) {
+    let email = request.params.email;
+    let key = request.params.key;
+    sistema.confirmarUsuario({ "email": email, "key": key }, function (usr) {
+        if (usr.email != -1) {
+            response.cookie('nick', usr.email);
+        }
+        response.redirect('/');
     });
 });
 

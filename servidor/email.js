@@ -13,7 +13,7 @@ const url ="http://localhost:3000/";
 
 module.exports.enviarEmail = async function (direccion, key, men) {
     const result = await transporter.sendMail({
-        from: 'tu-cuenta@gmail.com',
+        from: 'franzuel1@gmail.com',
         to: direccion,
         subject: 'Confirmar cuenta',
         text: 'Pulsa aquí para confirmar cuenta',

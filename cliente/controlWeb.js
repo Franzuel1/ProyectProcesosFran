@@ -87,18 +87,18 @@ function ControlWeb() {
         });
     }
 
-    this.mostrarRegistro=function(){
-        if ($.cookie('nick')){
+    this.mostrarRegistro = function () {
+        if ($.cookie('nick')) {
             return true;
         };
         $("#fmRegistro").remove();
-        $("#registro").load("./cliente/registro.html",function(){
-            $("#btnRegistro").on("click",function(){
-                let email=$("#email").val();
-                let pwd=$("#pwd").val();
-                if (email && pwd){
-                    rest.registrarUsuario(email,pwd);
-                    console.log(email+" "+pwd);
+        $("#registro").load("./cliente/registro.html", function () {
+            $("#btnRegistro").on("click", function () {
+                let email = $("#email").val();
+                let pwd = $("#pwd").val();
+                if (email && pwd) {
+                    rest.registrarUsuario(email, pwd);
+                    console.log(email + " " + pwd);
                 }
             });
         });
@@ -122,12 +122,10 @@ function ControlWeb() {
         });
     }
 
-
-    
-
-
     this.salir = function () {
+        //localStorage.removeItem("nick");
         $.removeCookie("nick");
         location.reload();
+        rest.cerrarSesion();
     }
 }

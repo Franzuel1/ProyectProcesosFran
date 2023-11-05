@@ -1,4 +1,5 @@
 const datos = require("./cad.js");
+const correo=require("./email.js");
 function Sistema() {
     this.cad = new datos.CAD();
     this.usuarios = {}; //this.usuarios=[]
