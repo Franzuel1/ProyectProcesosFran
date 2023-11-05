@@ -12,6 +12,7 @@ const cookieSession = require("cookie-session");
 require("./servidor/passport-setup.js");
 const modelo = require("./servidor/modelo.js");
 const bodyParser = require("body-parser");
+/*
 const haIniciado = function (request, response, next) {
     if (request.user) {
         next();
@@ -20,6 +21,7 @@ const haIniciado = function (request, response, next) {
         response.redirect("/")
     }
 }
+*/
 const bcrypt = require("bcrypt");
 const PORT = process.env.PORT || 3000;
 
@@ -51,7 +53,7 @@ app.get("/obtenerUsuarios", function (request, response) {
     response.send(lista);
 });
 
-app.get("/usuarioActivo/:nick", haIniciado, function (request, response) {
+app.get("/usuarioActivo/:nick", function (request, response) {
     let nick = request.params.nick;
     let res = sistema.usuarioActivo(nick);
     response.send(res);
@@ -105,6 +107,13 @@ app.post("/registrarUsuario", function (request, response) {
     });
 });
 
+app.post("/loginUsuario", function (request, response) {
+    sistema.loginUsuario(request.body, function (res) {
+        response.send({ "nick": res.email });
+    });
+}); //Comentar este si descomentamos el de abajo
+
+/*
 app.post('/loginUsuario', passport.authenticate("local", {
     failureRedirect: "/fallo", successRedirect: "/ok"})
 );
@@ -121,6 +130,7 @@ app.get("/cerrarSesion", haIniciado, function (request, response) {
         sistema.eliminarUsuario(nick);
     }
 });
+*/
 
 app.get("/confirmarUsuario/:email/:key", function (request, response) {
     let email = request.params.email;

@@ -102,7 +102,7 @@ function ControlWeb() {
 
     this.limpiar=function(){
         $("#mAU").remove();
-        $("#mRegistro").remove();
-        $("#mLogin").remove();
+        $("#registro").remove();
+        //$("#login").remove();
     }
 }

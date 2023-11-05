@@ -1,6 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const LocalStrategy = require('passport-local').Strategy;
+//const LocalStrategy = require('passport-local').Strategy;
 
 passport.serializeUser(function (user, done) {
     done(null, user);
@@ -19,7 +19,7 @@ passport.use(new GoogleStrategy({
         return done(null, profile);
     }
 ));
-
+/*
 passport.use(new LocalStrategy({ usernameField: "email", passwordField: "password" },
         function (email, password, done) {
             sistema.loginUsuario({ "email": email, "password": password }, function (user) {
@@ -32,3 +32,4 @@ passport.use(new LocalStrategy({ usernameField: "email", passwordField: "passwor
             })
         }
     ));
+*/
