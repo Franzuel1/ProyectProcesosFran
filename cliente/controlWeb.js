@@ -32,7 +32,7 @@ function ControlWeb() {
         //let nick=localStorage.getItem("nick");
         let nick = $.cookie("nick");
         if (nick) {
-            cw.mostrarMensaje("Bienvenido al sistema, " + nick);
+            cw.mostrarMsg("Bienvenido al sistema, " + nick);
         }
         else {
             cw.mostrarLogin();
@@ -59,34 +59,6 @@ function ControlWeb() {
         //rest.enviarJwt(jwt);
     }
 
-    this.enviarJwt = function (jwt) {
-        $.ajax({
-            type: 'POST',
-            url: '/enviarJwt',
-            data: JSON.stringify({ "jwt": jwt }),
-            success: function (data) {
-                let msg = "El nick " + nick + " está ocupado";
-                if (data.nick != -1) {
-                    console.log("Usuario " + data.nick + " ha sido registrado");
-                    msg = "Bienvenido al sistema, " + data.nick;
-                    $.cookie("nick", data.nick);
-                }
-                else {
-                    console.log("El nick ya está ocupado");
-                }
-                cw.limpiar();
-                cw.mostrarMensaje(msg);
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                //console.log(JSON.parse(xhr.responseText));
-                console.log("Status: " + textStatus);
-                console.log("Error: " + errorThrown);
-            },
-            contentType: 'application/json'
-            //dataType:'json'
-        });
-    }
-
     this.mostrarRegistro = function () {
         if ($.cookie('nick')) {
             return true;
@@ -103,7 +75,6 @@ function ControlWeb() {
             });
         });
     }
-
 
     this.mostrarLogin = function () {
         if ($.cookie('nick')) {
@@ -127,5 +98,11 @@ function ControlWeb() {
         $.removeCookie("nick");
         location.reload();
         rest.cerrarSesion();
+    }
+
+    this.limpiar=function(){
+        $("#mAU").remove();
+        $("#mRegistro").remove();
+        $("#mLogin").remove();
     }
 }

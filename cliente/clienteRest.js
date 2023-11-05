@@ -15,6 +15,34 @@ function ClienteRest() {
         });
     }
 
+    this.enviarJwt = function (jwt) {
+        $.ajax({
+            type: 'POST',
+            url: '/enviarJwt',
+            data: JSON.stringify({ "jwt": jwt }),
+            success: function (data) {
+                let msg = "El nick " + nick + " está ocupado";
+                if (data.nick != -1) {
+                    console.log("Usuario " + data.nick + " ha sido registrado");
+                    msg = "Bienvenido al sistema, " + data.nick;
+                    $.cookie("nick", data.nick);
+                }
+                else {
+                    console.log("El nick ya está ocupado");
+                }
+                cw.limpiar();
+                cw.mostrarMsg(msg);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                //console.log(JSON.parse(xhr.responseText));
+                console.log("Status: " + textStatus);
+                console.log("Error: " + errorThrown);
+            },
+            contentType: 'application/json'
+            //dataType:'json'
+        });
+    }
+
     this.agregarUsuario2 = function (nick) {
         $.ajax({
             type: 'GET',

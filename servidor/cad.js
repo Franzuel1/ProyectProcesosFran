@@ -5,7 +5,7 @@ function CAD() {
     this.usuarios;
 
     this.buscarOCrearUsuario = function (usr, callback) {
-        obtenerOCrear(this.usuarios, usr, callback);
+        buscarOCrear(this.usuarios, usr, callback);
     }
 
     function buscarOCrear(coleccion, criterio, callback) {
