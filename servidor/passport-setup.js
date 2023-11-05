@@ -20,8 +20,7 @@ passport.use(new GoogleStrategy({
     }
 ));
 
-passport.use(new
-    LocalStrategy({ usernameField: "email", passwordField: "password" },
+passport.use(new LocalStrategy({ usernameField: "email", passwordField: "password" },
         function (email, password, done) {
             sistema.loginUsuario({ "email": email, "password": password }, function (user) {
                 if (user.email != -1) {
