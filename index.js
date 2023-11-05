@@ -51,7 +51,7 @@ app.get("/obtenerUsuarios", function (request, response) {
     response.send(lista);
 });
 
-app.get("/usuarioActivo/:nick", function (request, response) {
+app.get("/usuarioActivo/:nick", haIniciado, function (request, response) {
     let nick = request.params.nick;
     let res = sistema.usuarioActivo(nick);
     response.send(res);
