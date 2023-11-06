@@ -6,6 +6,7 @@ function ClienteRest() {
             if (data.nick != -1) {
                 console.log("Usuario " + nick + " ha sido registrado");
                 msg = "Bienvenido al sistema, " + nick;
+                //localStorage.setItem("nick",nick);
                 $.cookie("nick", nick);
             }
             else {
@@ -21,16 +22,14 @@ function ClienteRest() {
             url: '/enviarJwt',
             data: JSON.stringify({ "jwt": jwt }),
             success: function (data) {
-                let msg = "El nick " + nick + " está ocupado";
+                let msg = "El nick está ocupado";
                 if (data.nick != -1) {
                     console.log("Usuario " + data.nick + " ha sido registrado");
                     msg = "Bienvenido al sistema, " + data.nick;
                     $.cookie("nick", data.nick);
                 }
-                else {
-                    console.log("El nick ya está ocupado");
-                }
                 cw.limpiar();
+                console.log(msg);
                 cw.mostrarMsg(msg);
             },
             error: function (xhr, textStatus, errorThrown) {

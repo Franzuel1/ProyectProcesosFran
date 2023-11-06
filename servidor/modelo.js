@@ -55,15 +55,14 @@ function Sistema() {
         if (!obj.nick) {
             obj.nick = obj.email;
         }
-        this.cad.buscarUsuario(obj, function (usr) {
+        this.cad.buscarUsuario(obj, function (usr) { //({"email":obj.email}, async function (usr)
             if (!usr) {
-                //el usuario no existe, luego lo puedo registrar
+                //el usuario no existe, luego lo puedo registrarc
                 obj.key = Date.now().toString();
                 obj.confirmada = false;
                 modelo.cad.insertarUsuario(obj, function (res) {
                     callback(res);
                 });
-                //correo.enviarEmail(obj.email,obj.key,"Confirmar cuenta");
                 correo.enviarEmail(obj.email, obj.key, "Confirmar cuenta");
             }
             else {

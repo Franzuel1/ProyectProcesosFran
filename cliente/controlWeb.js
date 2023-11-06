@@ -43,6 +43,7 @@ function ControlWeb() {
     this.init = function () {
         let cw = this;
         google.accounts.id.initialize({
+            //client_id:"",
             client_id: "162867793-krmekskd7524g7fph19coq973942ls8d.apps.googleusercontent.com", //prod
             auto_select: false,
             callback: cw.handleCredentialsResponse
@@ -51,12 +52,13 @@ function ControlWeb() {
     }
 
     this.handleCredentialsResponse = function (response) {
+        //console.log(response);
         let jwt = response.credential;
         let user = JSON.parse(atob(jwt.split(".")[1]));
         console.log(user.name);
         console.log(user.email);
         console.log(user.picture);
-        //rest.enviarJwt(jwt);
+        rest.enviarJwt(jwt);
     }
 
     this.mostrarRegistro = function () {
@@ -69,6 +71,7 @@ function ControlWeb() {
                 let email = $("#email").val();
                 let pwd = $("#pwd").val();
                 if (email && pwd) {
+                    //$("#mRegistro").remove();
                     rest.registrarUsuario(email, pwd);
                     console.log(email + " " + pwd);
                 }
@@ -102,7 +105,7 @@ function ControlWeb() {
 
     this.limpiar=function(){
         $("#mAU").remove();
-        $("#registro").remove();
-        //$("#login").remove();
+        $("#fmRegistro").remove();
+        $("#fmLogin").remove();
     }
 }

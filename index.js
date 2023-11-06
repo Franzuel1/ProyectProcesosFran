@@ -70,34 +70,75 @@ app.get("/eliminarUsuario/:nick", function (request, response) {
     response.send(res);
 });
 
-app.listen(PORT, () => {
-    console.log(`App está escuchando en el puerto ${PORT}`);
-    console.log('Ctrl+C para salir');
+app.get("/auth/google",passport.authenticate('google', { scope: ['profile','email'] }));
+
+
+
+app.get("/", function(request,response){
+    let contenido=fs.readFileSync(__dirname+"/cliente/index.html");
+    response.setHeader('Content-Type', 'text/html');
+    response.send(contenido);
 });
 
-app.get("/auth/google",
-    passport.authenticate('google', { scope: ['profile', 'email'] }));
+app.get("/agregarUsuario/:nick",function(request,response){
+    let nick=request.params.nick;
+    let res=sistema.agregarUsuario(nick);
+    response.send(res);
+});
 
-app.get('/google/callback',
-    passport.authenticate('google', { failureRedirect: '/fallo' }),
-    function (req, res) {
-        res.redirect('/good');
-    });
+app.get("/obtenerUsuarios",function(request,response){  //app.get("/obtenerUsuarios",haIniciado,function(request,response){
+    let lista=sistema.obtenerUsuarios();
+    response.send(lista);
+});    
 
-app.get("/good", function (request, response) {
-    let email = request.user.emails[0].value;
-    sistema.usuarioGoogle({ "email": email }, function (obj) {
-        response.cookie('nick', obj.email);
+app.get("/usuarioActivo/:nick",function(request,response){
+    let nick=request.params.nick;
+    let res=sistema.usuarioActivo(nick);
+    response.send(res);
+});
+
+app.get("/numeroUsuarios",function(request,response){
+    let res=sistema.numeroUsuarios();
+    response.send(res);
+});
+
+app.get("/eliminarUsuario/:nick",function(request,response){
+    let nick=request.params.nick;
+    let res=sistema.eliminarUsuario(nick);
+    response.send(res);
+})
+
+app.listen(PORT, () => {
+console.log('App está escuchando en el puerto ${PORT}');
+console.log('Ctrl+C para salir');
+});
+
+app.get('/google/callback', 
+ passport.authenticate('google', { failureRedirect: '/fallo' }),
+ function(req, res) {
+ res.redirect('/good');
+});
+
+
+app.get("/good", function(request,response){
+    let email=request.user.emails[0].value;
+    sistema.usuarioGoogle({'email':email},function(obj){
+        response.cookie('nick',obj.email);
         response.redirect('/');
     });
 });
 
-app.post('/enviarJwt', function (request, response) {
-    let jwt = request.body.jwt;
-    let user = JSON.parse(atob(jwt.split(".")[1]));
-    let email = user.email;
-    sistema.usuarioGoogle({ "email": email }, function (obj) {
-        response.send({ 'nick': obj.email });
+app.get("/fallo",function(request,response){
+    response.send({nick:"-1"})
+});
+
+app.post('/enviarJwt',function(request,response){
+    let jwt=request.body.jwt;
+    let user=JSON.parse(atob(jwt.split(".")[1])); //dice que seria global.atob
+    let email=user.email;
+    sistema.usuarioGoogle({'email':email},function(obj){  //sistema.buscarOCrearUsuario(email,function(obj){
+        console.log({obj});
+        response.send({'nick':obj.email});
     })
 });
 
@@ -107,26 +148,28 @@ app.post("/registrarUsuario", function (request, response) {
     });
 });
 
+
 app.post("/loginUsuario", function (request, response) {
     sistema.loginUsuario(request.body, function (res) {
         response.send({ "nick": res.email });
     });
-}); //Comentar este si descomentamos el de abajo
-
-/*
-app.post('/loginUsuario', passport.authenticate("local", {
-    failureRedirect: "/fallo", successRedirect: "/ok"})
-);
-
-app.get("/ok", function (request, response) {
-    response.send({ nick: request.user.email })
 });
 
-app.get("/cerrarSesion", haIniciado, function (request, response) {
-    let nick = request.user.nick;
+/*
+app.post('/loginUsuario',passport.authenticate("local",{failureRedirect:"/fallo",successRedirect: "/ok"})
+);
+
+app.get("/ok",function(request,response){   req, res
+    response.send({nick:request.user.email})    res
+});
+*/
+
+/*
+app.get("/cerrarSesion",haIniciado,function(request,response){
+    let nick=request.user.nick;
     request.logout();
     response.redirect("/");
-    if (nick) {
+    if (nick){
         sistema.eliminarUsuario(nick);
     }
 });
@@ -141,8 +184,4 @@ app.get("/confirmarUsuario/:email/:key", function (request, response) {
         }
         response.redirect('/');
     });
-});
-
-app.get("/fallo", function (request, response) {
-    response.send({ nick: "nook" })
 });

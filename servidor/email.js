@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer'); // npm install nodemailer
 const url ="http://localhost:3000/";
+//const url ="...";
 
     const transporter = nodemailer.createTransport({
         service: 'gmail',
