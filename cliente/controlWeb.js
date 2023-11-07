@@ -43,8 +43,8 @@ function ControlWeb() {
     this.init = function () {
         let cw = this;
         google.accounts.id.initialize({
-            //client_id:"162867793-s763pkc95vm58knhvu8cr47h32u92qi5.apps.googleusercontent.com",//desplegable
-            client_id: "162867793-krmekskd7524g7fph19coq973942ls8d.apps.googleusercontent.com", //local
+            client_id:"162867793-5a0fuv1dntbo103eaer1car72h9ssrjd.apps.googleusercontent.com",//desplegable
+            //client_id: "162867793-krmekskd7524g7fph19coq973942ls8d.apps.googleusercontent.com", //local
             auto_select: false,
             callback: cw.handleCredentialsResponse
         });
