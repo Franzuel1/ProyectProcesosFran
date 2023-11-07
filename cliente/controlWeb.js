@@ -43,8 +43,8 @@ function ControlWeb() {
     this.init = function () {
         let cw = this;
         google.accounts.id.initialize({
-            //client_id:"",
-            client_id: "162867793-krmekskd7524g7fph19coq973942ls8d.apps.googleusercontent.com", //prod
+            //client_id:"162867793-s763pkc95vm58knhvu8cr47h32u92qi5.apps.googleusercontent.com",//desplegable
+            client_id: "162867793-krmekskd7524g7fph19coq973942ls8d.apps.googleusercontent.com", //local
             auto_select: false,
             callback: cw.handleCredentialsResponse
         });
@@ -83,9 +83,11 @@ function ControlWeb() {
         if ($.cookie('nick')) {
             return true;
         };
+        this.limpiar();
         $("#fmLogin").remove();
         $("#registro").load("./cliente/login.html", function () {
-            $("#btnLogin").on("click", function () {
+            $("#btnLogin").on("click", function (event) {
+                event.preventDefault();
                 let email = $("#email").val();
                 let pwd = $("#pwd").val();
                 if (email && pwd) {

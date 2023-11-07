@@ -12,7 +12,7 @@ const cookieSession = require("cookie-session");
 require("./servidor/passport-setup.js");
 const modelo = require("./servidor/modelo.js");
 const bodyParser = require("body-parser");
-/*
+//
 const haIniciado = function (request, response, next) {
     if (request.user) {
         next();
@@ -21,8 +21,7 @@ const haIniciado = function (request, response, next) {
         response.redirect("/")
     }
 }
-*/
-const bcrypt = require("bcrypt");
+//
 const PORT = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + "/"));
@@ -134,7 +133,7 @@ app.get("/fallo",function(request,response){
 
 app.post('/enviarJwt',function(request,response){
     let jwt=request.body.jwt;
-    let user=JSON.parse(atob(jwt.split(".")[1])); //dice que seria global.atob
+    let user=JSON.parse(atob(jwt.split(".")[1]));
     let email=user.email;
     sistema.usuarioGoogle({'email':email},function(obj){  //sistema.buscarOCrearUsuario(email,function(obj){
         console.log({obj});
@@ -155,16 +154,16 @@ app.post("/loginUsuario", function (request, response) {
     });
 });
 
-/*
+
 app.post('/loginUsuario',passport.authenticate("local",{failureRedirect:"/fallo",successRedirect: "/ok"})
 );
 
-app.get("/ok",function(request,response){   req, res
-    response.send({nick:request.user.email})    res
+app.get("/ok",function(request,response){
+    response.send({nick:request.user.email})
 });
-*/
 
-/*
+
+//
 app.get("/cerrarSesion",haIniciado,function(request,response){
     let nick=request.user.nick;
     request.logout();
@@ -173,7 +172,7 @@ app.get("/cerrarSesion",haIniciado,function(request,response){
         sistema.eliminarUsuario(nick);
     }
 });
-*/
+//
 
 app.get("/confirmarUsuario/:email/:key", function (request, response) {
     let email = request.params.email;

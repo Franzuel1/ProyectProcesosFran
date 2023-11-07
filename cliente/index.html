@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Proyecto genérico</title>
+  <title>Proyecto Genérico</title>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -18,34 +18,68 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="./cliente/clienteRest.js"></script>
   <script src="./cliente/controlWeb.js"></script>
+
+  <style>
+    body {
+      background: linear-gradient(to bottom, #c0e1f9, #697280); /* Degradado de tonos azules claros */
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .sidebar {
+      background-color: #343a40;
+      width: 200px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 10px;
+      margin: 5px 0;
+      text-align: center;
+    }
+
+    .sidebar a:hover {
+      background-color: #8a9aaa;
+      border-radius: 30px;
+    }
+
+    .container {
+      background-color: #343a40;
+      flex: 1;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 300px;
+      margin: auto;
+      color: #ffffff;
+    }
+
+    h3 {
+      color: #ffffff;
+    }
+  </style>
 </head>
 
 <body onload="ini();">
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <!-- Brand/logo -->
-    <a class="navbar-brand" href="#">Logo</a>
-
-    <!-- Links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cw.mostrarRegistro()">Registrarse</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cw.mostrarLogin()">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" onclick="cw.salir()">Salir</a>
-      </li>
-    </ul>
+  <nav class="sidebar">
+    <a href="#" onclick="cw.mostrarRegistro()">Registrarse</a>
+    <a href="#" onclick="cw.mostrarLogin()">Login</a>
+    <a href="#" onclick="cw.salir()">Salir</a>
   </nav>
-
   <div class="container">
     <h3>Sistema</h3>
     <div id="au"></div>
     <div id="registro"></div>
     <div id="msg"></div>
   </div>
-
   <script>
     function ini() {
       cw = new ControlWeb();
@@ -53,7 +87,6 @@
       cw.comprobarSesion();
     };
   </script>
-
 </body>
 
 </html>
