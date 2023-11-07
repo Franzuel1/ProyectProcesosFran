@@ -162,8 +162,6 @@ app.get("/ok",function(request,response){
     response.send({nick:request.user.email})
 });
 
-
-//
 app.get("/cerrarSesion",haIniciado,function(request,response){
     let nick=request.user.nick;
     request.logout();
@@ -172,7 +170,6 @@ app.get("/cerrarSesion",haIniciado,function(request,response){
         sistema.eliminarUsuario(nick);
     }
 });
-//
 
 app.get("/confirmarUsuario/:email/:key", function (request, response) {
     let email = request.params.email;
