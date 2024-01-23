@@ -107,8 +107,11 @@ function ClienteRest() {
                     cw.mostrarLogin();
                 }
                 else {
-                    console.log("El email está ocupado");
-                    cw.mostrarMsg("El email está ocupado");
+                    //console.log("El email está ocupado");
+                    //cw.mostrarMsg("El email está ocupado");
+                    console.log("Hay un usuario registrado con ese email");
+                    cw.mostrarMensajeLogin("Hay un usuario registrado con ese email");
+                    cw.mostrarModal("No se ha podido registrar el usuario");
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
