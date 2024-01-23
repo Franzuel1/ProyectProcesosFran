@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Franzuel1/ProyectProcesosFran#readme",
   "dependencies": {
+    "@google-cloud/secret-manager": "^5.0.1",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "cookie-session": "^2.0.0",

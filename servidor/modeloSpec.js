@@ -26,10 +26,10 @@ describe('El sistema...', function () {
   it("Eliminar usuario", function () {
     let res = sistema.numeroUsuarios();
     expect(res.num).toEqual(0);
-    sistema.agregarUsuario("Pepe");
+    sistema.agregarUsuario(usr);
     res = sistema.numeroUsuarios();
     expect(res.num).toEqual(1);
-    let res2 = sistema.eliminarUsuario("Pepe");
+    let res2 = sistema.eliminarUsuario("pepe@pepe.es");
     expect(res2.nick).toEqual("Pepe");
     res2 = sistema.eliminarUsuario("Luis");
     expect(res2.nick).toEqual(-1);
@@ -38,16 +38,16 @@ describe('El sistema...', function () {
   });
 
   it("Usuario activo", function () {
-    sistema.agregarUsuario("Pepe");
-    let res = sistema.usuarioActivo("Pepe");
+    sistema.agregarUsuario(usr);
+    let res = sistema.usuarioActivo("pepe@pepe.es");
     expect(res.activo).toEqual(true);
   });
 
   it("Obtener usuarios", function () {
     let lista = sistema.obtenerUsuarios();
     expect(Object.keys(lista).length).toEqual(0);
-    sistema.agregarUsuario("Pepe");
-    sistema.agregarUsuario("Pepe1");
+    sistema.agregarUsuario(usr);
+    sistema.agregarUsuario("nick"="Pepe1", "email"="pepe1@pepe.es");
     lista = sistema.obtenerUsuarios();
     expect(Object.keys(lista).length).toEqual(2);
   });
@@ -59,5 +59,28 @@ describe('El sistema...', function () {
     sistema.agregarUsuario("Pepe1");
     res = sistema.numeroUsuarios();
     expect(res.num).toBe(2);
+  });
+
+  describe("Métodos que acceden a datos", function(){
+
+    //let usrTest=("email":"test@test.es", "nick":"test")
+    beforeEach(function(done){
+      sistema.cad.conectar(function(){
+        sistema.cad.registrarUsuario(usrTest, function(res){
+          sistema.cad.ConfirmarCuenta(usrTest.email,function(){
+            done();
+          })
+        })
+        done();
+      })
+    })
+
+    xit("Inicio de sesión correcto",function(){
+
+    });
+
+    xit("Inicio de sesión incorrecto",function(){
+
+    });
   })
 })

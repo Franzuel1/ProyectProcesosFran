@@ -4,15 +4,15 @@ const bcrypt = require("bcrypt");
 function Sistema() {
     this.cad = new datos.CAD();
     this.usuarios = {}; //this.usuarios=[]
-    this.agregarUsuario = function (nick) {
-        let res = { "nick": -1 };
-        if (!this.usuarios[nick]) {
-            this.usuarios[nick] = new Usuario(nick);
-            res.nick = nick;
-            console.log("Nuevo usuario en el sistem: " + nick);
+    this.agregarUsuario = function (email) {
+        let res = { "email": -1 };
+        if (!this.usuarios[email]) {
+            this.usuarios[email] = new Usuario(email);
+            res.email = email;
+            console.log("Nuevo usuario en el sistem: " + email);
         }
         else {
-            console.log("el nick " + nick + " está en uso");
+            console.log("el email " + email + " está en uso");
         } return res;
     }
     this.obtenerUsuarios = function () {
@@ -21,18 +21,18 @@ function Sistema() {
     this.obtenerTodosNick = function () {
         return Object.keys(this.usuarios);
     }
-    this.usuarioActivo = function (nick) {
-        //return !(this.usuarios[nick]==undefined)
+    this.usuarioActivo = function (email) {
+        //return !(this.usuarios[email]==undefined)
         let res = { activo: false };
-        res.activo = (nick in this.usuarios);
+        res.activo = (email in this.usuarios);
         return res;
     }
-    this.eliminarUsuario = function (nick) {
-        let res = { nick: -1 };
-        if (this.usuarios[nick]) {
-            delete this.usuarios[nick];
-            res.nick = nick;
-            console.log("Usuario " + nick + " eliminado");
+    this.eliminarUsuario = function (email) {
+        let res = { email: -1 };
+        if (this.usuarios[email]) {
+            delete this.usuarios[email];
+            res.email = email;
+            console.log("Usuario " + email + " eliminado");
         }
         else {
             console.log("El usuario no existe");
@@ -54,9 +54,9 @@ function Sistema() {
     this.registrarUsuario=function(obj,callback){
         let modelo=this; 
 
-        if (!obj.nick){ 
-            obj.nick=obj.email;
-        }
+        // if (!obj.email){ 
+        //     obj.email=obj.email;
+        // }
 
         bcrypt.hash(obj.password, 10, function (err, hash) {
             if (err) {
@@ -83,8 +83,8 @@ function Sistema() {
 /*
     this.registrarUsuario = function (obj, callback) {
         let modelo = this;
-        if (!obj.nick) {
-            obj.nick = obj.email;
+        if (!obj.email) {
+            obj.email = obj.email;
         }
         this.cad.buscarUsuario(obj, function (usr) { //({"email":obj.email}, async function (usr)
             if (!usr) {
@@ -154,9 +154,9 @@ function Sistema() {
     });
 }
 
-function Usuario(nick) {
-    this.nick = nick;
-    this.email;
+function Usuario(usr) {
+    this.nick = usr.nick;
+    this.email = usr.email;
     this.clave;
 }
 

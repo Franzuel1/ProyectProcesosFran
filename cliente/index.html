@@ -55,7 +55,7 @@
       background-color: #343a40;
       flex: 1;
       padding: 15px;
-      border-radius: 10px;
+      border-radius: 20px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       max-width: 300px;
       margin: auto;
@@ -74,8 +74,29 @@
     <a href="#" onclick="cw.mostrarLogin()">Login</a>
     <a href="#" onclick="cw.salir()">Salir</a>
   </nav>
+
+<!-- The Modal -->
+<div class="modal" id="miModal">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <!-- Modal Header -->
+  <div class="modal-header">
+  <h4 class="modal-title">Atención</h4>
+  <button type="button" class="close" data-dismiss="modal">&times;</button>
+  </div>
+  <!-- Modal body -->
+  <div class="modal-body" id="mBody">
+  </div>
+  <!-- Modal footer -->
+  <div class="modal-footer">
+  <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+  </div>
+  </div>
+  </div>
+ </div>
+ 
+
   <div class="container">
-    <h3>Sistema</h3>
     <div id="au"></div>
     <div id="registro"></div>
     <div id="msg"></div>

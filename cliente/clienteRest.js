@@ -1,16 +1,16 @@
 function ClienteRest() {
-    this.agregarUsuario = function (nick) {
+    this.agregarUsuario = function (email) {
         var cli = this;
-        $.getJSON("/agregarUsuario/" + nick, function (data) {
-            let msg = "El nick " + nick + " está ocupado";
-            if (data.nick != -1) {
-                console.log("Usuario " + nick + " ha sido registrado");
-                msg = "Bienvenido al sistema, " + nick;
-                //localStorage.setItem("nick",nick);
-                $.cookie("nick", nick);
+        $.getJSON("/agregarUsuario/" + email, function (data) {
+            let msg = "El email " + email + " está ocupado";
+            if (data.email != -1) {
+                console.log("Usuario " + email + " ha sido registrado");
+                msg = "Bienvenido al sistema, " + email;
+                //localStorage.setItem("email",email);
+                $.cookie("email", email);
             }
             else {
-                console.log("El nick ya está ocupado");
+                console.log("El email ya está ocupado");
             }
             cw.mostrarMsg(msg);
         });
@@ -22,11 +22,11 @@ function ClienteRest() {
             url: '/enviarJwt',
             data: JSON.stringify({ "jwt": jwt }),
             success: function (data) {
-                let msg = "El nick está ocupado";
-                if (data.nick != -1) {
-                    console.log("Usuario " + data.nick + " ha sido registrado");
-                    msg = "Bienvenido al sistema, " + data.nick;
-                    $.cookie("nick", data.nick);
+                let msg = "El email está ocupado";
+                if (data.email != -1) {
+                    console.log("Usuario " + data.email + " ha sido registrado");
+                    msg = "Bienvenido al sistema, " + data.email;
+                    $.cookie("email", data.email);
                 }
                 cw.limpiar();
                 console.log(msg);
@@ -42,16 +42,16 @@ function ClienteRest() {
         });
     }
 
-    this.agregarUsuario2 = function (nick) {
+    this.agregarUsuario2 = function (email) {
         $.ajax({
             type: 'GET',
-            url: '/agregarUsuario/' + nick,
+            url: '/agregarUsuario/' + email,
             success: function (data) {
-                if (data.nick != -1) {
-                    console.log("Usuario " + nick + " ha sido registrado")
+                if (data.email != -1) {
+                    console.log("Usuario " + email + " ha sido registrado")
                 }
                 else {
-                    console.log("El nick ya está ocupado");
+                    console.log("El email ya está ocupado");
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -71,23 +71,23 @@ function ClienteRest() {
             console.log('Número de usuarios en el sistema es: ' + data.num);
         });
     }
-    this.usuarioActivo = function (nick) {
-        $.getJSON("/usuarioActivo/" + nick, function (data) {
+    this.usuarioActivo = function (email) {
+        $.getJSON("/usuarioActivo/" + email, function (data) {
             if (data.activo) {
-                console.log("El usuario " + nick + " está activo");
+                console.log("El usuario " + email + " está activo");
             }
             else {
-                console.log("El usuario " + nick + " NO está activo")
+                console.log("El usuario " + email + " NO está activo")
             }
         });
     }
-    this.eliminarUsuario = function (nick) {
-        $.getJSON("/eliminarUsuario/" + nick, function (data) {
-            if (data.nick != -1) {
-                console.log("El usuario " + nick + " ha sido eliminado");
+    this.eliminarUsuario = function (email) {
+        $.getJSON("/eliminarUsuario/" + email, function (data) {
+            if (data.email != -1) {
+                console.log("El usuario " + email + " ha sido eliminado");
             }
             else {
-                console.log("El usuario " + nick + " no se ha podido eliminar")
+                console.log("El usuario " + email + " no se ha podido eliminar")
             }
         });
     }
@@ -98,17 +98,17 @@ function ClienteRest() {
             url: '/registrarUsuario',
             data: JSON.stringify({ "email": email, "password": password }),
             success: function (data) {
-                if (data.nick != -1) {
-                    console.log("Usuario " + data.nick + " ha sido registrado");
+                if (data.email != -1) {
+                    console.log("Usuario " + data.email + " ha sido registrado");
                     // mostrar un mensaje diciendo: consulta tu email
-                    //$.cookie("nick",data.nick);
+                    //$.cookie("email",data.email);
                     cw.limpiar();
-                    //cw.mostrarMensaje("Bienvenido al sistema, "+data.nick);
+                    //cw.mostrarMensaje("Bienvenido al sistema, "+data.email);
                     cw.mostrarLogin();
                 }
                 else {
-                    console.log("El nick está ocupado");
-                    cw.mostrarMsg("El nick está ocupado");
+                    console.log("El email está ocupado");
+                    cw.mostrarMsg("El email está ocupado");
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -125,16 +125,16 @@ function ClienteRest() {
             url: '/loginUsuario',
             data: JSON.stringify({ "email": email, "password": password }),
             success: function (data) {
-                if (data.nick != -1) {
-                    console.log("Usuario " + data.nick + " ha iniciado sesión");
+                if (data.email != -1) {
+                    console.log("Usuario " + data.email + " ha iniciado sesión");
                     // mostrar un mensaje diciendo: consulta tu email
-                    $.cookie("nick", data.nick);
+                    $.cookie("email", data.email);
                     cw.limpiar();
-                    cw.mostrarMsg("Bienvenido al sistema, " + data.nick);
+                    cw.mostrarMsg("Bienvenido al sistema, " + data.email);
                 }
                 else {
                     console.log("No se ha podido iniciar sesión");
-                    cw.mostrarMsg("El nick está ocupado");
+                    cw.mostrarMsg("El email está ocupado");
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -148,7 +148,7 @@ function ClienteRest() {
     this.cerrarSesion = function () {
         $.getJSON("/cerrarSesion", function () {
             console.log("Sesión cerrada");
-            $.removeCookie("nick");
+            $.removeCookie("email");
         });
     }
 

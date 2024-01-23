@@ -5,8 +5,8 @@ function ControlWeb() {
         let cadena = '<div id="mAU">';
         cadena = cadena + '<div class="card"><div class="card-body">';
         cadena = cadena + '<div class="form-group">';
-        cadena = cadena + '<label for="nick">Nick:</label>';
-        cadena = cadena + '<p><input type="text" class="form-control" id="nick" placeholder="introduce un nick"></p>';
+        cadena = cadena + '<label for="email">email:</label>';
+        cadena = cadena + '<p><input type="text" class="form-control" id="email" placeholder="introduce un email"></p>';
         cadena = cadena + '<button id="btnAU" type="submit" class="btn btn-primary">Submit</button>';
         cadena = cadena + '<div><a href="/auth/google"><img src="./cliente/img/web_neutral_sq_SI@1x.png" style="height:40px;"></a></div>';
         cadena = cadena + '</div>';
@@ -15,10 +15,10 @@ function ControlWeb() {
         $("#au").append(cadena); //au = agregar usuario
 
         $("#btnAU").on("click", function () {
-            let nick = $("#nick").val();
-            if (nick) {
+            let email = $("#email").val();
+            if (email) {
                 $('#mAU').remove();
-                rest.agregarUsuario(nick);
+                rest.agregarUsuario(email);
             }
         });
     }
@@ -29,10 +29,10 @@ function ControlWeb() {
     }
 
     this.comprobarSesion = function () {
-        //let nick=localStorage.getItem("nick");
-        let nick = $.cookie("nick");
-        if (nick) {
-            cw.mostrarMsg("Bienvenido al sistema, " + nick);
+        //let email=localStorage.getItem("email");
+        let email = $.cookie("email");
+        if (email) {
+            cw.mostrarMsg("Bienvenido al sistema, " + email);
         }
         else {
             cw.mostrarLogin();
@@ -43,8 +43,8 @@ function ControlWeb() {
     this.init = function () {
         let cw = this;
         google.accounts.id.initialize({
-            client_id:"162867793-5a0fuv1dntbo103eaer1car72h9ssrjd.apps.googleusercontent.com",//desplegable
-            //client_id: "162867793-krmekskd7524g7fph19coq973942ls8d.apps.googleusercontent.com", //local
+            //client_id:"162867793-5a0fuv1dntbo103eaer1car72h9ssrjd.apps.googleusercontent.com",//desplegable
+            client_id: "162867793-krmekskd7524g7fph19coq973942ls8d.apps.googleusercontent.com", //local
             auto_select: false,
             callback: cw.handleCredentialsResponse
         });
@@ -62,7 +62,7 @@ function ControlWeb() {
     }
 
     this.mostrarRegistro = function () {
-        if ($.cookie('nick')) {
+        if ($.cookie('email')) {
             return true;
         };
         $("#fmRegistro").remove();
@@ -80,7 +80,7 @@ function ControlWeb() {
     }
 
     this.mostrarLogin = function () {
-        if ($.cookie('nick')) {
+        if ($.cookie('email')) {
             return true;
         };
         this.limpiar();
@@ -98,14 +98,23 @@ function ControlWeb() {
         });
     }
 
+    this.mostrarModal = function (m) {
+        $("#msg").remove();
+        let cadena = "<div id='msg'>" + m + "</div>";
+        $('#mBody').append(cadena)
+        $('#miModal').modal();
+        // $('#btnModal').on('click',function(){
+        // })
+    }
+
     this.salir = function () {
-        //localStorage.removeItem("nick");
-        $.removeCookie("nick");
+        //localStorage.removeItem("email");
+        $.removeCookie("email");
         location.reload();
         rest.cerrarSesion();
     }
 
-    this.limpiar=function(){
+    this.limpiar = function () {
         $("#mAU").remove();
         $("#fmRegistro").remove();
         $("#fmLogin").remove();
