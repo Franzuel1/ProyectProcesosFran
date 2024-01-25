@@ -7,11 +7,14 @@ git push
 const fs = require("fs");
 const express = require('express');
 const app = express();
+const httpServer = require('http').Server(app);
+const { Server } = require("socket.io");
 const passport = require("passport");
 const cookieSession = require("cookie-session");
 require("./servidor/passport-setup.js");
 const modelo = require("./servidor/modelo.js");
 const bodyParser = require("body-parser");
+
 //
 const haIniciado = function (request, response, next) {
     if (request.user) {

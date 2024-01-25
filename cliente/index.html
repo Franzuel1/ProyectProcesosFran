@@ -13,11 +13,24 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
     integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+  </script>
 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="./cliente/clienteRest.js"></script>
   <script src="./cliente/controlWeb.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js"
+    integrity="sha512-tE1z+95+lMCGwy+9PnKgUSIeHhvioC9lMlI7rLWU0Ps3XTdjRygLcy4mLuL0JAoK4TLdQEyP0yOl/9dMOqpH/Q=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer">
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.esm.min.js"
+    integrity="sha512-43+Rln/YcxembRCKzM5U+2QLDAVEiRD8q+pG3vO4syOwmZkXi1ft809VmL8VYFXaQvtzpZq6eNR3aMlpGeqz7A=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer">
+  </script>
 
   <style>
     body {
@@ -106,6 +119,7 @@
       cw = new ControlWeb();
       rest = new ClienteRest();
       cw.comprobarSesion();
+      ws=new ClienteWS();
     };
   </script>
 </body>
