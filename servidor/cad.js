@@ -1,7 +1,7 @@
 const mongo = require("mongodb").MongoClient;
 const ObjectId = require("mongodb").ObjectId;
 
-function CAD() {
+function CAD(callback) {
     this.usuarios;
 
     this.buscarOCrearUsuario = function (usr, callback) {
@@ -14,7 +14,6 @@ function CAD() {
             else {
                 console.log("Elemento actualizado");
                 console.log(doc.value.email);
-                //console.log(doc);
                 callback({ email: doc.value.email });
             }
         });
@@ -61,14 +60,10 @@ function CAD() {
             if (err) { throw err; }
             else {
                 console.log("Elemento actualizado");
-                //console.log(doc);
-                //console.log(doc);
                 callback({ email: doc.value.email });
             }
         });
     }
-
-
 
     this.conectar = async function (callback) {
         let cad = this;
@@ -76,8 +71,23 @@ function CAD() {
         await cliente.connect();
         const database = cliente.db("sistema");
         cad.usuarios = database.collection("usuarios");
-        callback(database);
+    
+        // Verificar si callback es una función antes de llamarla
+        if (typeof callback === 'function') {
+            callback(database);
+        } else {
+            console.error('Error: El argumento proporcionado a conectar no es una función.');
+        }
+    };
+    
+
+    // Método para verificar si la conexión está establecida
+    this.estaConectado = function () {
+        return this.conectado;
     }
+
+    // Llama a la función de conectar al instanciar CAD y pasa la función de callback proporcionada
+    this.conectar(callback);
 }
 
 module.exports.CAD = CAD;

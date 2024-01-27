@@ -1,9 +1,16 @@
 //const datos = require("./cad.js");
 //const correo = require("./email.js");
 //const bcrypt = require("bcrypt");
+const { CAD } = require('servidor\cad.js');
 function Sistema() {
     //this.cad = new datos.CAD();
+    this.cad = new CAD();
     this.usuarios = {}; //this.usuarios=[]
+
+    this.cad.conectar(function (db) {
+        console.log("Conectado a Mongo Atlas");
+    });
+
     this.agregarUsuario = function (email) {
         let res = { "email": -1 };
         if (!this.usuarios[email]) {
@@ -149,9 +156,7 @@ function Sistema() {
         })
     }
 
-    this.cad.conectar(function (db) {
-        console.log("Conectado a Mongo Atlas");
-    });
+    
 
     //HECHO
     this.crearPartida = function(email){
@@ -235,4 +240,3 @@ function Partida(codigo){
     this.jugadores = [];
     this.maxJug = 2;
 }
-    
