@@ -70,6 +70,7 @@ function CAD(callback) {
         let cliente = new mongo("mongodb+srv://franzuel:scipio@cluster0.ahptciy.mongodb.net/?retryWrites=true&w=majority");
         await cliente.connect();
         const database = cliente.db("sistema");
+        cad.partida=database.collections("logs");
         cad.usuarios = database.collection("usuarios");
     
         // Verificar si callback es una función antes de llamarla
@@ -80,10 +81,26 @@ function CAD(callback) {
         }
     };
     
-
     // Método para verificar si la conexión está establecida
     this.estaConectado = function () {
         return this.conectado;
+    }
+
+    // Método para insertar un registro de actividad en la colección de logs
+    this.insertarLog = function (registro, callback) {
+        insertarLog(this.logs, registro, callback);
+    }
+
+    function insertarLog(coleccion, registro, callback) {
+        coleccion.insertOne(registro, function (err, result) {
+            if (err) {
+                console.error("Error al insertar registro de actividad:", err);
+                callback(err);
+            } else {
+                console.log("Registro de actividad insertado:", registro);
+                callback(null, result);
+            }
+        });
     }
 
     // Llama a la función de conectar al instanciar CAD y pasa la función de callback proporcionada

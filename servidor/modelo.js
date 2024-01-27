@@ -29,23 +29,22 @@ function Sistema() {
             this.usuarios[email] = new Usuario(email);
             res.email = email;
             console.log("Nuevo usuario en el sistema: " + email);
+
+            // Insertar registro de actividad
+            let registro = {
+                "tipo-operacion": "registroUsuario",
+                "usuario": email,
+                "fecha-hora": new Date()
+            };
+            this.cad.insertarLog(registro, function (err, result) {
+                if (err) {
+                    console.error("Error al insertar registro de actividad:", err);
+                }
+            });
+
         } else {
             console.log("El email " + email + " está en uso");
         }
-        return res;
-    };
-
-    this.obtenerUsuarios = function () {
-        return this.usuarios;
-    };
-
-    this.obtenerTodosNick = function () {
-        return Object.keys(this.usuarios);
-    };
-
-    this.usuarioActivo = function (email) {
-        let res = { activo: false };
-        res.activo = (email in this.usuarios);
         return res;
     };
 
@@ -55,6 +54,19 @@ function Sistema() {
             delete this.usuarios[email];
             res.email = email;
             console.log("Usuario " + email + " eliminado");
+
+            // Insertar registro de actividad
+            let registro = {
+                "tipo-operacion": "eliminarUsuario",
+                "usuario": email,
+                "fecha-hora": new Date()
+            };
+            this.cad.insertarLog(registro, function (err, result) {
+                if (err) {
+                    console.error("Error al insertar registro de actividad:", err);
+                }
+            });
+
         } else {
             console.log("El usuario no existe");
         }
@@ -65,6 +77,20 @@ function Sistema() {
         let lista = Object.keys(this.usuarios);
         let res = { num: lista.length };
         return res;
+    };
+
+    this.usuarioActivo = function (email) {
+        let res = { activo: false };
+        res.activo = (email in this.usuarios);
+        return res;
+    };
+
+    this.obtenerUsuarios = function () {
+        return this.usuarios;
+    };
+
+    this.obtenerTodosNick = function () {
+        return Object.keys(this.usuarios);
     };
 
     this.usuarioGoogle = function (usr, callback) {
@@ -131,7 +157,6 @@ function Sistema() {
         });
     };
 
-    //HECHO
     this.crearPartida = function (email) {
         // Obtener el objeto usuario con el email proporcionado
         var usuario = this.usuarios.find(function (usuario) {
@@ -154,7 +179,6 @@ function Sistema() {
         }
     };
 
-    //HECHO
     this.unirAPartida = function (email, codigo) {
         // Obtener el usuario cuyo email es el proporcionado
         var usuario = this.usuarios.find(function (usuario) {
@@ -175,7 +199,6 @@ function Sistema() {
         }
     };
 
-    //HECHO
     this.obtenerPartidasDisponibles = function () {
         let lista = [];
         for (var i = 0; i < this.partidas.length; i++) {
