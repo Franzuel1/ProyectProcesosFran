@@ -1,6 +1,6 @@
-const datos = require("./cad.js");
-const correo = require("./email.js");
-const bcrypt = require("bcrypt");
+//const datos = require("./cad.js");
+//const correo = require("./email.js");
+//const bcrypt = require("bcrypt");
 function Sistema() {
     //this.cad = new datos.CAD();
     this.usuarios = {}; //this.usuarios=[]
@@ -228,10 +228,11 @@ function Usuario(usr) {
     this.clave;
 }
 
-module.exports.Sistema = Sistema;
+//module.exports.Sistema = Sistema;
 
 function Partida(codigo){
     this.codigo = codigo;
     this.jugadores = [];
     this.maxJug = 2;
 }
+    

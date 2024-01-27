@@ -119,4 +119,44 @@ function ControlWeb() {
         $("#fmRegistro").remove();
         $("#fmLogin").remove();
     }
+
+    this.mostrarCrearPartida = function () {
+        $('#crearPartida').remove();
+        let cadena = '<div id="crearPartida">';
+        cadena += '<button id="btnCrearPartida" class="btn btn-primary">Crear Partida</button>';
+        cadena += '<div id="esperandoRival" style="display: none;">Esperando rival...</div>';
+        cadena += '</div>';
+        $("#acciones").append(cadena);
+
+        $("#btnCrearPartida").on("click", function () {
+            ws.crearPartida();
+            mostrarEsperandoRival();
+        });
+    }
+
+    this.mostrarUnirsePartida = function (partidas) {
+        $('#unirsePartida').remove();
+        let cadena = '<div id="unirsePartida">';
+        cadena += '<h3>Partidas Disponibles</h3>';
+        cadena += '<ul id="listaPartidas"></ul>'; // Aquí puedes usar una lista para mostrar las partidas disponibles
+        cadena += '</div>';
+        $("#acciones").append(cadena);
+
+        actualizarListaPartidas(partidas);
+    }
+}
+
+// Función para mostrar la animación de "esperando rival" al crear una partida
+function mostrarEsperandoRival() {
+    $('#esperandoRival').show();
+}
+
+// Función para actualizar la lista de partidas disponibles en la interfaz gráfica
+function actualizarListaPartidas(partidas) {
+    // Limpiar la lista de partidas
+    $('#listaPartidas').empty();
+    // Recorrer la lista de partidas y agregarlas a la interfaz gráfica
+    partidas.forEach(function (partida) {
+        $('#listaPartidas').append('<li>' + partida.codigo + '</li>'); // Por ejemplo, mostrar el código de la partida
+    });
 }
