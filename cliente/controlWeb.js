@@ -99,11 +99,10 @@ function ControlWeb() {
     }
 
     this.mostrarJuego = function () {
-        //DESCOMENTAR AL FINAL
+        //Para obligar al inicio de sesión si se va a jugar
         if ($.cookie('email') == undefined) {
             return true;
         };
-        //
         // Código para mostrar la vista del juego
         $("#board").load("./cliente/connect4.html");
         document.getElementById('content').style.display = 'none';
