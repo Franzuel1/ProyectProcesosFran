@@ -7,8 +7,8 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'franzuel1@gmail.com',
-        pass: ''
-        //pass: 'dfhu haiu xtum zkwi' //no es la clave de gmail
+        //pass: ''
+        pass: 'dfhu haiu xtum zkwi' //no es la clave de gmail
     }
 });
 
