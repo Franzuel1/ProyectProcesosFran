@@ -22,7 +22,7 @@ async function obtenerGmailEmail() {
 async function obtenerOptions() {
     try {
         // Obtener el correo electrónico de Gmail
-        const user = await obtenerGmailEmail();
+        const user = process.env.GMAIL_EMAIL;
         // Obtener la contraseña de Gmail de una variable de entorno
         const password = process.env.GMAIL_PASSWORD;
         if (!password) {

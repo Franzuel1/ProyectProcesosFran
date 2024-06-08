@@ -98,6 +98,23 @@ function ControlWeb() {
         });
     }
 
+    this.mostrarJuego = function () {
+        //DESCOMENTAR AL FINAL
+        if ($.cookie('email') == undefined) {
+            return true;
+        };
+        //
+        // Código para mostrar la vista del juego
+        $("#board").load("./cliente/connect4.html");
+        document.getElementById('content').style.display = 'none';
+        document.getElementById('game').style.display = 'flex';
+        createBoard();
+    };
+
+    // $("#jugar").on("click", function () {
+    //     cw.mostrarJuego();
+    // });
+
     this.mostrarModal = function (m) {
         $("#msg").remove();
         let cadena = "<div id='msg'>" + m + "</div>";

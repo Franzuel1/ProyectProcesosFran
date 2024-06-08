@@ -155,4 +155,16 @@ function ClienteRest() {
         });
     }
 
+    // this.mostrarJuego = function() {
+    //     if ($.cookie('email')) {
+    //         $("#fmRegistro").remove();
+    //         $("#fmLogin").remove();
+    //         $("#registro").load("./connect4.html");
+    //     } else {
+    //         // Si el usuario no está registrado o logueado, mostrar mensaje o redirigir al login
+    //         console.log("Usuario no registrado o logueado");
+    //     }
+    // }
+    
+
 }

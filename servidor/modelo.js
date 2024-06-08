@@ -199,27 +199,27 @@ function Sistema() {
         }
     };
 
-    this.obtenerPartidasDisponibles = function () {
-        let lista = [];
-        for (var i = 0; i < this.partidas.length; i++) {
-            var partida = this.partidas[i];
-            // Comprobar si la partida está disponible (puedes definir tu lógica aquí)
-            if (partida.jugadores.length < partida.maxJug) {
-                // Obtener el email del creador de la partida
-                var creador = ''; // Implementa la lógica para obtener el email del creador
-                // Obtener el código de la partida
-                var codigo = partida.codigo;
-                // Crear un objeto JSON con esos dos datos
-                var partidaInfo = {
-                    creador: creador,
-                    codigo: codigo
-                };
-                // Meter el objeto JSON en el array lista
-                lista.push(partidaInfo);
-            }
-        }
-        return lista;
-    };
+    // this.obtenerPartidasDisponibles = function () {
+    //     let lista = [];
+    //     for (var i = 0; i < this.partidas.length; i++) {
+    //         var partida = this.partidas[i];
+    //         // Comprobar si la partida está disponible (puedes definir tu lógica aquí)
+    //         if (partida.jugadores.length < partida.maxJug) {
+    //             // Obtener el email del creador de la partida
+    //             var creador = ''; // Implementa la lógica para obtener el email del creador
+    //             // Obtener el código de la partida
+    //             var codigo = partida.codigo;
+    //             // Crear un objeto JSON con esos dos datos
+    //             var partidaInfo = {
+    //                 creador: creador,
+    //                 codigo: codigo
+    //             };
+    //             // Meter el objeto JSON en el array lista
+    //             lista.push(partidaInfo);
+    //         }
+    //     }
+    //     return lista;
+    // };
 }
 
 function Usuario(usr) {
